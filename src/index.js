@@ -23,10 +23,10 @@ root.render(
           <Header />
           <Routes>
             <Route path="/" element={<Navigate to="/welcome" />} />
-            <Route exact path="/welcome" element={<Welcome />} />
-            <Route exact path="/all" element={<NotesList />} />
-            <Route exact path="/add" element={<AddNote />} />
-            <Route exact path="/home" element={<Home />} />
+            <Route path="/welcome" element={<Welcome />} />
+            <Route path="/all" element={<NotesList />} />
+            <Route path="/add" element={<AddNote />} />
+            <Route path="/home" element={<Home />} />
           </Routes>
         </div>
       </BrowserRouter>
