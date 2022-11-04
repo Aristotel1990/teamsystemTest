@@ -21,11 +21,13 @@ export default function FormNote() {
   const IMPORTANT = ["Important", "Very important", "Not important"];
 
   const [value, setValue] = useState(new Date());
+  const [title, setTitle] = useState("");
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       id: notes.length,
-      title: "",
+      title: title,
       date: value,
       important: "Important",
       note: "",
@@ -35,6 +37,8 @@ export default function FormNote() {
       try {
         dispatch(addNotes(values));
         resetForm();
+        setTitle("");
+        setValue(new Date());
         setSubmitting(false);
       } catch (error) {
         console.error(error);
@@ -54,7 +58,12 @@ export default function FormNote() {
             direction={{ xs: "column", sm: "row" }}
             spacing={{ xs: 3, sm: 2 }}
           >
-            <TextField size="small" label="Title" {...getFieldProps("title")} />
+            <TextField
+              size="small"
+              label="Title"
+              {...getFieldProps("title")}
+              onChange={(event) => setTitle(event.target.value)}
+            />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateTimePicker
                 renderInput={(props) => <TextField size="small" {...props} />}
