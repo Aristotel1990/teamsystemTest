@@ -46,19 +46,6 @@ export default function FormNote() {
 
   const { handleSubmit, isSubmitting, setFieldValue, getFieldProps } = formik;
 
-  const handleDrop = useCallback(
-    (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      if (file) {
-        setFieldValue("avatarUrl", {
-          ...file,
-          preview: URL.createObjectURL(file),
-        });
-      }
-    },
-    [setFieldValue]
-  );
-
   return (
     <FormikProvider value={formik}>
       <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
