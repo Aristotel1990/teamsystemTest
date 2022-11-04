@@ -1,0 +1,32 @@
+import { useEffect } from "react";
+import { Typography, Stack } from "@mui/material";
+import { useDispatch } from "../redux/store";
+import { getNotesFromStorage } from "../redux/slices/notes";
+
+// ----------------------------------------------------------------------
+
+export default function Welcome() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getNotesFromStorage());
+  }, []);
+
+  return (
+    <Stack
+      direction="column"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+      }}
+    >
+      <Typography variant="h4">Welcome Flex Business Solutions</Typography>
+      <Typography variant="h8">Do you want to take a note? </Typography>
+
+      <br />
+      <br />
+    </Stack>
+  );
+}
