@@ -54,7 +54,7 @@ export default function FormNote() {
             direction={{ xs: "column", sm: "row" }}
             spacing={{ xs: 3, sm: 2 }}
           >
-            <TextField size="small" label="Title" />
+            <TextField size="small" label="Title" {...getFieldProps("title")} />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateTimePicker
                 renderInput={(props) => <TextField size="small" {...props} />}
