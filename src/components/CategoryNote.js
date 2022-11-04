@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 // material
 import { Tab, Box, Tabs, Stack } from "@mui/material";
 import { useDispatch, useSelector } from "../redux/store";
-import { filter } from "lodash";
 import ListNotes from "./ListNotes";
 import { getCategory } from "../redux/slices/notes";
 
@@ -18,6 +17,7 @@ export default function CategoryNote() {
   useEffect(() => {
     setData(category);
   }, [category]);
+
   const ACCOUNT_TABS = [
     {
       value: "Important",

@@ -1,4 +1,4 @@
-import { sum, map, filter, uniqBy, reject } from "lodash";
+import { filter, reject } from "lodash";
 import { createSlice } from "@reduxjs/toolkit";
 // utils
 // import axios from "../../utils/axios";
@@ -48,6 +48,7 @@ const slice = createSlice({
           important: "Very important",
         },
       ];
+      window.localStorage.setItem("Notes", JSON.stringify(state.notes));
     },
     deleteNote(state, action) {
       const product = action.payload;

@@ -6,7 +6,11 @@ import { Stack, Box, Button, TextField, Typography, Grid } from "@mui/material";
 
 import CategoryNote from "./CategoryNote";
 import { useDispatch, useSelector } from "../redux/store";
-import { clearData, fakeNotes } from "../redux/slices/notes";
+import {
+  clearData,
+  fakeNotes,
+  getNotesFromStorage,
+} from "../redux/slices/notes";
 
 function applySortFilter(array, comparator, query) {
   const stabilizedThis = array.map((el, index) => [el, index]);
@@ -42,12 +46,13 @@ export default function Home() {
 
   const { notes } = useSelector((state) => state.notes);
   const [filterName, setFilterName] = useState("");
-  const [orderBy, setOrderBy] = useState("title");
+  const [orderBy] = useState("title");
   const [data, setData] = useState(notes);
 
   useEffect(() => {
+    dispatch(getNotesFromStorage());
     setData(notes);
-  }, []);
+  }, [dispatch]);
 
   const allData = applySortFilter(
     notes,

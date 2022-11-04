@@ -19,15 +19,16 @@ root.render(
   <ReduxProvider store={store}>
     <PersistGate loading={<>Ne pritje</>} persistor={persistor}>
       <BrowserRouter>
-        <div>
+        <App>
           <Header />
           <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route path="/all" element={<NotesList />} />
-            <Route path="/add" element={<AddNote />} />
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Navigate to="/welcome" />} />
+            <Route exact path="/welcome" element={<Welcome />} />
+            <Route exact path="/all" element={<NotesList />} />
+            <Route exact path="/add" element={<AddNote />} />
+            <Route exact path="/home" element={<Home />} />
           </Routes>
-        </div>
+        </App>
       </BrowserRouter>
     </PersistGate>
   </ReduxProvider>
