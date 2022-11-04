@@ -22,8 +22,7 @@ root.render(
         <div>
           <Header />
           <Routes>
-            <Route path="/" element={<Navigate to="/welcome" />} />
-            <Route path="/welcome" element={<Welcome />} />
+            <Route path="/" element={<Welcome />} />
             <Route path="/all" element={<NotesList />} />
             <Route path="/add" element={<AddNote />} />
             <Route path="/home" element={<Home />} />

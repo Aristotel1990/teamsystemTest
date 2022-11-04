@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Link style={{ textDecoration: "none" }} to="/welcome">
+        <Link style={{ textDecoration: "none" }} to="/">
           {" "}
           <Typography
             variant="h8"
