@@ -5,7 +5,7 @@ import { Form, FormikProvider, useFormik } from "formik";
 import { Box, Card, Stack, TextField, Button } from "@mui/material";
 // utils
 import { useDispatch } from "../redux/store";
-import { editNote } from "../redux/slices/notes";
+import { editNote } from "../redux/slices/data";
 import { Select } from "@mui/material";
 import { InputLabel } from "@mui/material";
 import { FormControl } from "@mui/material";

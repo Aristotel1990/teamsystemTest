@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "../redux/store";
-import { deleteNote } from "../redux/slices/notes";
+import { deleteNote } from "../redux/slices/data";
 import EditNote from "./EditNote";
 
 // ----------------------------------------------------------------------

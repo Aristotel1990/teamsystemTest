@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import storage from "redux-persist/lib/storage";
 // slices
 
-import notesReducer from "./slices/notes";
+import dataReducer from "./slices/data";
 
 // ----------------------------------------------------------------------
 
@@ -14,7 +14,7 @@ const rootPersistConfig = {
 };
 
 const rootReducer = combineReducers({
-  notes: notesReducer,
+  data: dataReducer,
 });
 
 export { rootPersistConfig, rootReducer };

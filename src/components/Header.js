@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import React from "react";
 
 import { AppBar, Toolbar, Typography } from "@mui/material";
 
@@ -20,7 +21,7 @@ export default function Header() {
             Welcome
           </Typography>
         </Link>
-        <Link style={{ textDecoration: "none" }} to="/home">
+        <Link style={{ textDecoration: "none" }} to="/customer">
           {" "}
           <Typography
             variant="h8"
@@ -29,10 +30,10 @@ export default function Header() {
               color: "white",
             }}
           >
-            Home
+            Customers
           </Typography>
         </Link>
-        <Link style={{ textDecoration: "none" }} to="/all">
+        <Link style={{ textDecoration: "none" }} to="/items">
           {" "}
           <Typography
             variant="h8"
@@ -42,13 +43,13 @@ export default function Header() {
               color: "white",
             }}
           >
-            All Notes
+            Items{" "}
           </Typography>
         </Link>
-        <Link style={{ textDecoration: "none" }} to="/add">
+        <Link style={{ textDecoration: "none" }} to="/all">
           {" "}
           <Typography variant="h8" color="white">
-            Add Note{" "}
+            Invoices{" "}
           </Typography>
         </Link>
       </Toolbar>

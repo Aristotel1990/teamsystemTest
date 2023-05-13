@@ -9,10 +9,12 @@ import { store, persistor } from "./redux/store";
 import "./index.css";
 import App from "./App";
 import Header from "./components/Header";
-import NotesList from "./components/Notes";
 import AddNote from "./components/AddNote";
-import Home from "./components/Home";
 import Welcome from "./components/Welcome";
+
+import CustomerTab from "./pages/CustomerTab";
+import InvoiceTab from "./pages/InvoiceTab";
+import ItemsTab from "./pages/ItemsTab";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -24,9 +26,10 @@ root.render(
           <Routes>
             <Route path="/" element={<Navigate to="/welcome" />} />
             <Route exact path="/welcome" element={<Welcome />} />
-            <Route exact path="/all" element={<NotesList />} />
+            <Route exact path="/all" element={<InvoiceTab />} />
             <Route exact path="/add" element={<AddNote />} />
-            <Route exact path="/home" element={<Home />} />
+            <Route exact path="/customer" element={<CustomerTab />} />
+            <Route exact path="/items" element={<ItemsTab />} />
           </Routes>
         </App>
       </BrowserRouter>

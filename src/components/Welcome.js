@@ -1,18 +1,12 @@
 import { useEffect } from "react";
 import { Typography, Stack } from "@mui/material";
 import { useDispatch } from "../redux/store";
-import { getNotesFromStorage } from "../redux/slices/notes";
+import { getdataFromStorage } from "../redux/slices/data";
 import { Grid } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
 export default function Welcome() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getNotesFromStorage());
-  }, []);
-
   return (
     <Grid spacing={2}>
       <Stack
@@ -24,8 +18,8 @@ export default function Welcome() {
           height: "100vh",
         }}
       >
-        <Typography variant="h4">Welcome Flex Business Solutions</Typography>
-        <Typography variant="h8">Do you want to take a note? </Typography>
+        <Typography variant="h4">Welcome to Teamsystem test</Typography>
+        <Typography variant="h8">Do you want to create an invoice? </Typography>
 
         <br />
         <br />

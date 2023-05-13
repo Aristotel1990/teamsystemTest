@@ -5,7 +5,7 @@ import { Form, FormikProvider, useFormik } from "formik";
 import { Box, Card, Stack, TextField, Button } from "@mui/material";
 // utils
 import { useDispatch, useSelector } from "../redux/store";
-import { addNotes } from "../redux/slices/notes";
+import { adddata } from "../redux/slices/data";
 import { Select } from "@mui/material";
 import { InputLabel } from "@mui/material";
 import { FormControl } from "@mui/material";
@@ -17,7 +17,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 export default function FormNote() {
   const dispatch = useDispatch();
-  const { notes } = useSelector((state) => state.notes);
+  const { data } = useSelector((state) => state.data);
   const IMPORTANT = ["Important", "Very important", "Not important"];
 
   const [value, setValue] = useState(new Date());
@@ -26,7 +26,7 @@ export default function FormNote() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      id: notes.length,
+      id: data.length,
       title: title,
       date: value,
       important: "Important",
@@ -35,7 +35,7 @@ export default function FormNote() {
     // validationSchema: NewUserSchema,
     onSubmit: async (values, { setSubmitting, resetForm, setErrors }) => {
       try {
-        dispatch(addNotes(values));
+        dispatch(adddata(values));
         resetForm();
         setTitle("");
         setValue(new Date());
