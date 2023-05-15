@@ -23,15 +23,11 @@ export default function ItemsTable() {
       field: "number",
       headerName: "Number",
       width: 150,
-
-      editable: true,
     },
     {
       field: "title",
       headerName: "Title",
       width: 300,
-
-      editable: true,
     },
     {
       field: "price",
@@ -71,8 +67,7 @@ export default function ItemsTable() {
               },
             },
           }}
-          pcountrySizeOptions={[5]}
-          checkboxSelection
+          pcountrySizeOptions={[10]}
           disableRowSelectionOnClick
         />
       </Box>

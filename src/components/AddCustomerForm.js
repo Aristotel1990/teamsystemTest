@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import dayjs from "dayjs";
 import { Form, FormikProvider, useFormik } from "formik";
 // material
 import { Box, Card, Stack, TextField, Button } from "@mui/material";
@@ -15,22 +14,22 @@ import {
 
 export default function AddCustomerForm() {
   const dispatch = useDispatch();
-  const { customers } = useSelector((state) => state.data);
+  const { customers, countries } = useSelector((state) => state.data);
 
   const [number, setNumber] = useState("");
   const [name, setName] = useState("");
-  const [country, setCountry] = useState("");
-
+  const [country, setCountry] = useState(countries[2].name);
+  const lastElement = customers?.slice(-1)[0];
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      id: customers.length,
+      id: lastElement?.id + 1,
       number: number,
       name: name,
       country: country,
     },
     // validationSchema: NewUserSchema,
-    onSubmit: async (values, { setSubmitting, resetForm, setErrors }) => {
+    onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
         dispatch(addCustomers(values));
         resetForm();
@@ -48,8 +47,11 @@ export default function AddCustomerForm() {
   const clearData = () => {
     dispatch(clearCustomers());
   };
-
-  const { handleSubmit, isSubmitting, setFieldValue, getFieldProps } = formik;
+  const resetForm = () => {
+    setName("");
+    setNumber("");
+  };
+  const { handleSubmit, getFieldProps, touched, errors } = formik;
 
   return (
     <FormikProvider value={formik}>
@@ -70,18 +72,33 @@ export default function AddCustomerForm() {
                 {...getFieldProps("number")}
                 onChange={(event) => setNumber(event.target.value)}
               />
+
               <TextField
                 size="small"
                 label="Name"
                 {...getFieldProps("name")}
                 onChange={(event) => setName(event.target.value)}
               />
+
               <TextField
                 size="small"
+                select
                 label="Country"
+                placeholder="Country"
                 {...getFieldProps("country")}
-                onChange={(event) => setCountry(event.target.value)}
-              />
+                SelectProps={{ native: true }}
+                error={Boolean(touched.size && errors.size)}
+                helperText={touched.size && errors.size}
+                onChange={(event) => {
+                  setCountry(event.target.value);
+                }}
+              >
+                {countries.map((type) => (
+                  <option key={type.name} value={type.name}>
+                    {type.name}
+                  </option>
+                ))}
+              </TextField>
               <Box sx={{ mt: 3, display: "flex", justifyContent: "flex-end" }}>
                 <Button type="submit" variant="contained">
                   Add

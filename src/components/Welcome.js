@@ -1,14 +1,27 @@
 import { useEffect } from "react";
 import { Typography, Stack } from "@mui/material";
 import { useDispatch } from "../redux/store";
-import { getdataFromStorage } from "../redux/slices/data";
+import {
+  getData,
+  getInvoicesFromStorage,
+  getItemsFromStorage,
+  getdataFromStorage,
+} from "../redux/slices/data";
+import Page from "../utils/Page";
 import { Grid } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
 export default function Welcome() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getData());
+    dispatch(getInvoicesFromStorage());
+    dispatch(getdataFromStorage());
+    dispatch(getItemsFromStorage());
+  }, [dispatch]);
   return (
-    <Grid spacing={2}>
+    <Page>
       <Stack
         direction="column"
         style={{
@@ -24,6 +37,6 @@ export default function Welcome() {
         <br />
         <br />
       </Stack>
-    </Grid>
+    </Page>
   );
 }

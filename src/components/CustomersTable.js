@@ -1,9 +1,7 @@
 import * as React from "react";
 import { useSelector, useDispatch } from "../redux/store";
-import { Button } from "@mui/material";
-import { Box } from "@mui/material";
-import { Grid } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { Box, Grid, Button } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { deleteCustomersByID, getdataFromStorage } from "../redux/slices/data";
 import { useEffect } from "react";
 
@@ -67,8 +65,7 @@ export default function CustomersTable() {
               },
             },
           }}
-          pcountrySizeOptions={[5]}
-          checkboxSelection
+          pcountrySizeOptions={[10]}
           disableRowSelectionOnClick
         />
       </Box>

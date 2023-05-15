@@ -1,36 +1,41 @@
 import React, { useState } from "react";
-import dayjs from "dayjs";
 import { Form, FormikProvider, useFormik } from "formik";
 // material
-import { Box, Card, Stack, TextField, Button, Radio } from "@mui/material";
+import {
+  Box,
+  Card,
+  Stack,
+  TextField,
+  Button,
+  Radio,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 // utils
 import { useDispatch, useSelector } from "../redux/store";
 import {
-  addCustomers,
   addData,
-  addFakeCustomers,
-  adddata,
   clearCustomers,
+  clearSingleinvoice,
+  createData,
   createInoices,
 } from "../redux/slices/data";
-import { FormControlLabel } from "@mui/material";
-import { RadioGroup } from "@mui/material";
-import { useEffect } from "react";
-import InvoiceButtons from "./InvoiceButtons";
+import ConvertToCSV from "./ConvertToCSV";
 
 // ----------------------------------------------------------------------
 
 export default function AddInvoiceForm() {
   const dispatch = useDispatch();
-  const { customers, items, singleInvoice, invoices } = useSelector(
+  const { customers, items, singleInvoice, invoices, data } = useSelector(
     (state) => state.data
   );
 
-  const [item, setItem] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [item, setItem] = useState(items[0]);
+  const [quantity, setQuantity] = useState(0);
   const [customer, setCustomer] = useState("");
   const total = singleInvoice.reduce((a, v) => (a = a + v.total), 0);
   const nr = singleInvoice.reduce((a, v) => (a = a + v.quantity), 0);
+  const [alert, setAlert] = useState(false);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -42,9 +47,9 @@ export default function AddInvoiceForm() {
       total: item?.price * quantity,
     },
     // validationSchema: NewUserSchema,
-    onSubmit: async (values, { setSubmitting, resetForm, setErrors }) => {
+    onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
-        dispatch(addData(values));
+        await dispatch(addData(values));
         resetForm();
         setSubmitting(false);
       } catch (error) {
@@ -54,40 +59,41 @@ export default function AddInvoiceForm() {
       }
     },
   });
-  const onCreateInvoice = () => {
-    const data = {
-      id: invoices?.length + 1,
-      number: invoices.length + 1,
+  const onCreateInvoice = async () => {
+    const newData = {
+      id: data?.length + 1,
+      number: data.length + 1,
       date: new Date(),
       customer: customer,
-      email: "example@example.com",
-      eInvoice: "",
+      email: "test@t.com",
       paymenta: "",
       accounting: nr,
       status: "Completed",
       total: total,
     };
 
-    dispatch(createInoices(data));
+    await dispatch(createInoices(newData));
+    setAlert(true);
+    dispatch(createData(singleInvoice));
   };
-  const clearData = () => {
-    dispatch(clearCustomers());
+  const onAlert = () => {
+    return (
+      <>
+        <Alert onClose={() => setAlert(false)}>
+          Invoice is created — check it out!
+        </Alert>
+      </>
+    );
   };
   const onSelectedItem = (id) => {
     const select = items.find((i) => i.id.toString() === id);
-
     setItem(select);
   };
-
-  const {
-    errors,
-    values,
-    touched,
-    handleSubmit,
-    isSubmitting,
-    setFieldValue,
-    getFieldProps,
-  } = formik;
+  const resetForm = () => {
+    setItem(items[0]);
+    setQuantity(0);
+  };
+  const { errors, touched, handleSubmit, getFieldProps } = formik;
 
   return (
     <FormikProvider value={formik}>
@@ -124,6 +130,7 @@ export default function AddInvoiceForm() {
                 size="small"
                 label="Quantity"
                 type="number"
+                value={quantity}
                 onChange={(event) => setQuantity(event.target.value)}
               />
               <Box sx={{ mt: 3, display: "flex", justifyContent: "flex-end" }}>
@@ -166,10 +173,9 @@ export default function AddInvoiceForm() {
         <Button size="small" variant="contained" onClick={onCreateInvoice}>
           Create Invoice
         </Button>
-        <Button size="small" color="success" variant="contained">
-          Export Invoice
-        </Button>
+        <ConvertToCSV array={singleInvoice} total={total} />
       </Stack>
+      {alert ? onAlert() : ""}
     </FormikProvider>
   );
 }

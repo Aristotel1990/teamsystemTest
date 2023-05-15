@@ -1,20 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-import SingleNote from "./SingleNote";
-import { useDispatch } from "../redux/store";
-
-import { Card, Typography, Grid, Text } from "@mui/material";
+import { Card, Typography, Grid } from "@mui/material";
 import { useSelector } from "../redux/store";
-import { getNotesFromStorage } from "../redux/slices/data";
 import Demo from "./Demo";
 
 export default function CustomersList() {
-  const dispatch = useDispatch();
-
   const { customers } = useSelector((state) => state.data);
-  useEffect(() => {
-    // dispatch(getNotesFromStorage());
-  }, [dispatch]);
+
   return (
     <Card sx={{ p: 2 }}>
       <Typography variant="overline" sx={{ display: "block" }}>

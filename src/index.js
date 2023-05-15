@@ -9,7 +9,6 @@ import { store, persistor } from "./redux/store";
 import "./index.css";
 import App from "./App";
 import Header from "./components/Header";
-import AddNote from "./components/AddNote";
 import Welcome from "./components/Welcome";
 
 import CustomerTab from "./pages/CustomerTab";
@@ -27,7 +26,6 @@ root.render(
             <Route path="/" element={<Navigate to="/welcome" />} />
             <Route exact path="/welcome" element={<Welcome />} />
             <Route exact path="/all" element={<InvoiceTab />} />
-            <Route exact path="/add" element={<AddNote />} />
             <Route exact path="/customer" element={<CustomerTab />} />
             <Route exact path="/items" element={<ItemsTab />} />
           </Routes>

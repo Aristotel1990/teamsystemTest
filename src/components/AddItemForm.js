@@ -25,17 +25,18 @@ export default function AddItemForm() {
   const [number, setNumber] = useState("");
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
+  const lastElement = items?.slice(-1)[0];
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      id: items.length,
+      id: lastElement?.id + 1,
       number: number,
       title: title,
       price: price,
     },
     // validationSchema: NewUserSchema,
-    onSubmit: async (values, { setSubmitting, resetForm, setErrors }) => {
+    onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
         dispatch(addItems(values));
         resetForm();
@@ -54,8 +55,12 @@ export default function AddItemForm() {
     dispatch(clearItems());
   };
 
-  const { handleSubmit, isSubmitting, setFieldValue, getFieldProps } = formik;
-
+  const { handleSubmit, getFieldProps } = formik;
+  const resetForm = () => {
+    setPrice("");
+    setTitle("");
+    setNumber("");
+  };
   return (
     <FormikProvider value={formik}>
       <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
