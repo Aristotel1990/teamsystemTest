@@ -30,7 +30,7 @@ export default function AddItemForm() {
       id: lastElement?.id + 1 || 0,
       number: number || "",
       title: title || "",
-      price: price || 0,
+      price: price,
     },
     // validationSchema: NewUserSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {

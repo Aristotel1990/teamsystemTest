@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Stack, TextField, Typography, Grid } from "@mui/material";
+import { Box, Button, Stack, TextField, Grid } from "@mui/material";
 import { DataGrid, GridDeleteIcon } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "../../redux/store";
 import { fDate } from "../../utils/formatTime";
@@ -52,13 +52,12 @@ export default function InvoiceTable() {
   const dispatch = useDispatch();
   const [filterName, setFilterName] = useState("");
   const [orderBy] = useState("id");
-  const [data, setData] = useState(invoices);
+  const [data] = useState(invoices);
 
   useEffect(() => {
     dispatch(getInvoicesFromStorage());
     dispatch(getData());
-    setData(invoices);
-  }, []);
+  }, [dispatch]);
   const columns = [
     { field: "id", headerName: "ID", width: 30 },
     {
@@ -162,23 +161,19 @@ export default function InvoiceTable() {
 
   return (
     <Grid padding={2} container>
-      <Typography marginBottom={2} variant="h4">
-        Invoices table
-      </Typography>
       <Grid
         sx={{
           borderRight: 0.1,
         }}
-        padding={2}
         item
         xs={12}
       >
         <Stack
           direction={{ xs: "column", sm: "row" }}
-          spacing={{ xs: 3, sm: 2 }}
           justifyContent="space-between"
+          marginBottom={2}
         >
-          <Stack sx={{ width: "30%", justifyContent: "flex-end" }}>
+          <Stack sx={{ width: "30%" }}>
             <TextField
               label="Search by customer,status,number or total"
               size="small"
@@ -192,7 +187,7 @@ export default function InvoiceTable() {
             Clear all data from storage
           </Button>
         </Stack>
-      </Grid>{" "}
+      </Grid>
       <Box sx={{ height: 500, width: "100%" }}>
         <DataGrid
           rows={allData}

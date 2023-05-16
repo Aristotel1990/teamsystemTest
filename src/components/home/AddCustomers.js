@@ -4,7 +4,7 @@ import AddCustomerForm from "../forms/AddCustomerForm";
 import { Grid } from "@mui/material";
 export default function AddCustomers() {
   return (
-    <Grid padding={2} container>
+    <Grid padding={2} container alignSelf="center">
       <Grid item xs={12}>
         <AddCustomerForm />
       </Grid>

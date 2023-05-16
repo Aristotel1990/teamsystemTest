@@ -9,7 +9,7 @@ import { store, persistor } from "./redux/store";
 import "./index.css";
 import App from "./App";
 import { CustomerTab, InvoiceTab, ItemsTab } from "./pages";
-import { Header, Welcome } from "./components/home";
+import { Header, Instructions, Welcome } from "./components/home";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -24,6 +24,7 @@ root.render(
             <Route exact path="/all" element={<InvoiceTab />} />
             <Route exact path="/customer" element={<CustomerTab />} />
             <Route exact path="/items" element={<ItemsTab />} />
+            <Route exact path="/instruction" element={<Instructions />} />
           </Routes>
         </App>
       </BrowserRouter>

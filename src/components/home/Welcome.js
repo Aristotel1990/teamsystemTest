@@ -8,6 +8,7 @@ import {
   getdataFromStorage,
 } from "../../redux/slices/data";
 import Page from "../../utils/Page";
+import { Link } from "react-router-dom";
 
 // ----------------------------------------------------------------------
 
@@ -24,15 +25,26 @@ export default function Welcome() {
       <Stack
         direction="column"
         style={{
-          display: "flex",
           alignItems: "center",
+          marginTop: 200,
           justifyContent: "center",
-          height: "100vh",
+          alignSelf: "center",
+          textAlign: "center",
         }}
       >
         <Typography variant="h4">Welcome to Teamsystem test</Typography>
         <Typography variant="h8">Do you want to create an invoice? </Typography>
-
+        <Link style={{ textDecoration: "none" }} to="/instruction">
+          {" "}
+          <Typography
+            variant="h8"
+            sx={{
+              mr: 2,
+            }}
+          >
+            Go to instructions{" "}
+          </Typography>
+        </Link>
         <br />
         <br />
       </Stack>

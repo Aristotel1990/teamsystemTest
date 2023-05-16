@@ -12,7 +12,11 @@ export default function CustomersList() {
       <Typography variant="overline" sx={{ display: "block" }}>
         My Customers
       </Typography>
-      <Grid container>
+      <Grid
+        container
+        direction={{ xs: "column", sm: "row" }}
+        spacing={{ xs: 3, sm: 2 }}
+      >
         {customers.map((row, index) => {
           return (
             <Grid key={row.id} item xs={3}>
