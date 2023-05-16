@@ -188,7 +188,9 @@ export default function InvoiceTable() {
             />
           </Stack>
 
-          <Button onClick={() => dispatch(clearData())}>Clear all data</Button>
+          <Button onClick={() => dispatch(clearData())}>
+            Clear all data from storage
+          </Button>
         </Stack>
       </Grid>{" "}
       <Box sx={{ height: 500, width: "100%" }}>
