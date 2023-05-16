@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import Page from "../utils/Page";
-import ItemsTable from "../components/ItemsTable";
-import AddItems from "../components/AddItems";
 
 // material
 import { Tab, Box, Tabs, Stack } from "@mui/material";
+import { ItemsTable } from "../components/tables";
+import { AddItems } from "../components/home";
 
 // redux
 

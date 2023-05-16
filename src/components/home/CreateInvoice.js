@@ -1,7 +1,7 @@
 import React from "react";
+import { AddInvoiceForm } from "../forms";
+import { TablePrice } from "../tables";
 
-import AddInvoiceForm from "./AddInvoiceForm";
-import TablePrice from "./TablePrice";
 import { Grid } from "@mui/material";
 
 export default function CreateInvoice() {

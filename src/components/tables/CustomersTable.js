@@ -1,21 +1,17 @@
-import * as React from "react";
-import { useSelector, useDispatch } from "../redux/store";
-import { Button } from "@mui/material";
-import { Box } from "@mui/material";
-import { Grid } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "../../redux/store";
+import { Box, Grid, Button } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import {
   deleteCustomersByID,
-  deleteItemsByID,
-  getItemsFromStorage,
-} from "../redux/slices/data";
-import { useEffect } from "react";
+  getdataFromStorage,
+} from "../../redux/slices/data";
 
-export default function ItemsTable() {
-  const { items } = useSelector((state) => state.data);
+export default function CustomersTable() {
+  const { customers } = useSelector((state) => state.data);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getItemsFromStorage());
+    dispatch(getdataFromStorage());
   }, [dispatch]);
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
@@ -25,13 +21,13 @@ export default function ItemsTable() {
       width: 150,
     },
     {
-      field: "title",
-      headerName: "Title",
+      field: "name",
+      headerName: "Fullname",
       width: 300,
     },
     {
-      field: "price",
-      headerName: "Price",
+      field: "country",
+      headerName: "Country",
       width: 150,
 
       sortable: false,
@@ -44,7 +40,7 @@ export default function ItemsTable() {
           <Button
             color="warning"
             variant="text"
-            onClick={() => dispatch(deleteItemsByID(params.row.id))}
+            onClick={() => dispatch(deleteCustomersByID(params.row.id))}
           >
             delete
           </Button>
@@ -57,17 +53,17 @@ export default function ItemsTable() {
     <Grid padding={2} container>
       <Box sx={{ height: 500, width: "100%" }}>
         <DataGrid
-          rows={items}
+          rows={customers}
           columns={columns}
           density="compact"
           initialState={{
             pagination: {
               paginationModel: {
-                pcountrySize: 10,
+                pageSize: 10,
               },
             },
           }}
-          pcountrySizeOptions={[10]}
+          pageSizeOptions={[10]}
           disableRowSelectionOnClick
         />
       </Box>

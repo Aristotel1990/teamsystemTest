@@ -8,12 +8,8 @@ import { PersistGate } from "redux-persist/lib/integration/react";
 import { store, persistor } from "./redux/store";
 import "./index.css";
 import App from "./App";
-import Header from "./components/Header";
-import Welcome from "./components/Welcome";
-
-import CustomerTab from "./pages/CustomerTab";
-import InvoiceTab from "./pages/InvoiceTab";
-import ItemsTab from "./pages/ItemsTab";
+import { CustomerTab, InvoiceTab, ItemsTab } from "./pages";
+import { Header, Welcome } from "./components/home";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

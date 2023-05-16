@@ -1,6 +1,6 @@
 import React from "react";
 import CustomersList from "./CustomersList";
-import AddCustomerForm from "./AddCustomerForm";
+import AddCustomerForm from "../forms/AddCustomerForm";
 import { Grid } from "@mui/material";
 export default function AddCustomers() {
   return (

@@ -1,35 +1,36 @@
 import React, { useState } from "react";
 import { Form, FormikProvider, useFormik } from "formik";
 // material
+import { useSelector, useDispatch } from "../../redux/store";
 import { Box, Card, Stack, TextField, Button } from "@mui/material";
+import {
+  addCustomers,
+  addFakeCustomers,
+  clearCustomers,
+} from "../../redux/slices/data";
 // utils
-import { useDispatch, useSelector } from "../redux/store";
-import { addFakeItems, addItems, clearItems } from "../redux/slices/data";
-import { InputAdornment } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function AddItemForm() {
+export default function AddCustomerForm() {
   const dispatch = useDispatch();
-  const { items } = useSelector((state) => state.data);
+  const { customers, countries } = useSelector((state) => state.data);
 
   const [number, setNumber] = useState("");
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const lastElement = items?.slice(-1)[0];
-
+  const [name, setName] = useState("");
+  const [country, setCountry] = useState(countries[2].name);
+  const lastElement = customers?.slice(-1)[0];
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       id: lastElement?.id + 1,
       number: number,
-      title: title,
-      price: price,
+      name: name,
+      country: country,
     },
-    // validationSchema: NewUserSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
-        dispatch(addItems(values));
+        dispatch(addCustomers(values));
         resetForm();
         setSubmitting(false);
       } catch (error) {
@@ -40,18 +41,17 @@ export default function AddItemForm() {
     },
   });
   const addfakeData = () => {
-    dispatch(addFakeItems());
+    dispatch(addFakeCustomers());
   };
   const clearData = () => {
-    dispatch(clearItems());
+    dispatch(clearCustomers());
   };
-
-  const { handleSubmit, getFieldProps } = formik;
   const resetForm = () => {
-    setPrice("");
-    setTitle("");
+    setName("");
     setNumber("");
   };
+  const { handleSubmit, getFieldProps, touched, errors } = formik;
+
   return (
     <FormikProvider value={formik}>
       <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
@@ -67,28 +67,37 @@ export default function AddItemForm() {
             >
               <TextField
                 size="small"
-                label="Number/Code"
+                label="Number"
                 {...getFieldProps("number")}
                 onChange={(event) => setNumber(event.target.value)}
               />
+
               <TextField
                 size="small"
-                label="Title"
-                {...getFieldProps("title")}
-                onChange={(event) => setTitle(event.target.value)}
+                label="Name"
+                {...getFieldProps("name")}
+                onChange={(event) => setName(event.target.value)}
               />
+
               <TextField
                 size="small"
-                label="Price"
-                {...getFieldProps("price")}
-                onChange={(event) => setPrice(event.target.value)}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">€</InputAdornment>
-                  ),
-                  type: "number",
+                select
+                label="Country"
+                placeholder="Country"
+                {...getFieldProps("country")}
+                SelectProps={{ native: true }}
+                error={Boolean(touched.size && errors.size)}
+                helperText={touched.size && errors.size}
+                onChange={(event) => {
+                  setCountry(event.target.value);
                 }}
-              />
+              >
+                {countries.map((type) => (
+                  <option key={type.name} value={type.name}>
+                    {type.name}
+                  </option>
+                ))}
+              </TextField>
               <Box sx={{ mt: 3, display: "flex", justifyContent: "flex-end" }}>
                 <Button type="submit" variant="contained">
                   Add
@@ -102,10 +111,10 @@ export default function AddItemForm() {
             alignItems="center"
           >
             <Button variant="contained" onClick={addfakeData}>
-              Add fake Items
+              Add fake customers
             </Button>
             <Button color="error" variant="contained" onClick={clearData}>
-              Clear all Items
+              Clear all customers
             </Button>
           </Stack>
         </Stack>

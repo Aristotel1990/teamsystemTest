@@ -1,8 +1,6 @@
-import { filter, reject } from "lodash";
+import { reject } from "lodash";
 import { createSlice } from "@reduxjs/toolkit";
-// utils
-// import axios from "../../utils/axios";
-// import { orders } from '../../utils/mock-data/orders';
+
 // ----------------------------------------------------------------------
 
 const initialState = {

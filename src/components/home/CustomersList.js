@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Card, Typography, Grid } from "@mui/material";
-import { useSelector } from "../redux/store";
+import { useSelector } from "../../redux/store";
 import Demo from "./Demo";
 
 export default function CustomersList() {
@@ -10,7 +10,7 @@ export default function CustomersList() {
   return (
     <Card sx={{ p: 2 }}>
       <Typography variant="overline" sx={{ display: "block" }}>
-        My Customers{" "}
+        My Customers
       </Typography>
       <Grid container>
         {customers.map((row, index) => {
@@ -19,7 +19,7 @@ export default function CustomersList() {
               <Demo data={row} />
             </Grid>
           );
-        })}{" "}
+        })}
       </Grid>
     </Card>
   );

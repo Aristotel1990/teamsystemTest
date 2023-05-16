@@ -1,8 +1,8 @@
 import React from "react";
 
-import AddItemForm from "./AddItemForm";
-import ItemsTable from "./ItemsTable";
 import { Grid } from "@mui/material";
+import { ItemsTable } from "../tables";
+import { AddItemForm } from "../forms";
 export default function AddItems() {
   return (
     <Grid padding={2} container>

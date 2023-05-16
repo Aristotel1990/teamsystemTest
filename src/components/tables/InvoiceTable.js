@@ -1,30 +1,18 @@
-import * as React from "react";
-import {
-  Box,
-  Button,
-  Pagination,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { Grid } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useSelector, useDispatch } from "../redux/store";
-import { formatStatus } from "../utils/formatStatus";
-import ChangeStatusDialog from "./ChangeStatusDialog";
-import { fDate, fDateTime } from "../utils/formatTime";
-import { GridDeleteIcon, GridPrinIcon } from "@mui/x-data-grid";
+import React, { useEffect, useState } from "react";
+import { Box, Button, Stack, TextField, Typography, Grid } from "@mui/material";
+import { DataGrid, GridDeleteIcon } from "@mui/x-data-grid";
+import { useSelector, useDispatch } from "../../redux/store";
+import { fDate } from "../../utils/formatTime";
 import {
   clearData,
   deleteInvoiceByID,
   getData,
   getInvoicesFromStorage,
-} from "../redux/slices/data";
+} from "../../redux/slices/data";
 import { filter } from "lodash";
-import ConvertToCSV from "./ConvertToCSV";
-import ConvertTocsvByID from "./ConvertTocsvByID";
+import ChangeStatusDialog from "../utils/ChangeStatusDialog";
+import { formatStatus } from "../../utils/formatStatus";
+import ConvertTocsvByID from "../utils/ConvertTocsvByID";
 
 function applySortFilter(array, comparator, query) {
   const stabilizedThis = array.map((el, index) => [el, index]);
@@ -34,8 +22,6 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    if (!isNaN(query)) {
-    }
     return filter(
       array,
       (_user) =>
@@ -74,7 +60,7 @@ export default function InvoiceTable() {
     setData(invoices);
   }, []);
   const columns = [
-    { field: "id", headerName: "ID", width: 30, hide: true },
+    { field: "id", headerName: "ID", width: 30 },
     {
       field: "number",
       headerName: "NR",

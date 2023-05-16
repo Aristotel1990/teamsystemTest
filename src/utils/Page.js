@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
-import { forwardRef, useEffect, useCallback } from "react";
+import { forwardRef } from "react";
 // material
-import { Typography } from "@mui/material";
 import { Box } from "@mui/material";
 // utils
 

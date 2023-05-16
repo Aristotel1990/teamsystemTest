@@ -1,33 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Form, FormikProvider, useFormik } from "formik";
 // material
-import {
-  Box,
-  Card,
-  Stack,
-  TextField,
-  Button,
-  Radio,
-  Alert,
-  AlertTitle,
-} from "@mui/material";
+import { Box, Card, Stack, TextField, Button, Alert } from "@mui/material";
 // utils
-import { useDispatch, useSelector } from "../redux/store";
+import { useDispatch, useSelector } from "../../redux/store";
 import {
   addData,
   clearSingleinvoice,
   createData,
   createInoices,
-  getItemsFromStorage,
-  getdataFromStorage,
-} from "../redux/slices/data";
-import ConvertToCSV from "./ConvertToCSV";
+} from "../../redux/slices/data";
+import ConvertToCSV from "../utils/ConvertToCSV";
 
 // ----------------------------------------------------------------------
 
 export default function AddInvoiceForm() {
   const dispatch = useDispatch();
-  const { customers, items, singleInvoice, invoices, data } = useSelector(
+  const { customers, items, singleInvoice, data } = useSelector(
     (state) => state.data
   );
 
@@ -35,6 +24,8 @@ export default function AddInvoiceForm() {
   const [quantity, setQuantity] = useState(0);
   const [customer, setCustomer] = useState(customers[0]?.name);
   const [alert, setAlert] = useState(false);
+  const [errAlert, setAlertError] = useState(false);
+
   const total = singleInvoice?.reduce((a, v) => (a = a + v?.total), 0);
 
   const formik = useFormik({
@@ -49,7 +40,7 @@ export default function AddInvoiceForm() {
     // validationSchema: NewUserSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
-        await dispatch(addData(values));
+        dispatch(addData(values));
         resetForm();
         setSubmitting(false);
       } catch (error) {
@@ -74,19 +65,33 @@ export default function AddInvoiceForm() {
       total: total.toString(),
     };
 
-    await dispatch(createInoices(newData));
-    setAlert(true);
-    dispatch(createData(singleInvoice));
+    if (singleInvoice.length <= 0) {
+      setAlertError(true);
+    } else {
+      await dispatch(createInoices(newData));
+      setAlert(true);
+      dispatch(createData(singleInvoice));
+    }
   };
   const oncloseAlert = (id) => {
     setAlert(false);
+    setAlertError(false);
     dispatch(clearSingleinvoice());
   };
-  const onAlert = () => {
+  const onAlert = (data) => {
+    if (data === "success") {
+      return (
+        <>
+          <Alert onClose={oncloseAlert}>
+            Invoice is created — check it on the table!
+          </Alert>
+        </>
+      );
+    }
     return (
       <>
-        <Alert onClose={oncloseAlert}>
-          Invoice is created — check it on the table!
+        <Alert color="error" onClose={oncloseAlert}>
+          Invoice is empty!
         </Alert>
       </>
     );
@@ -182,7 +187,8 @@ export default function AddInvoiceForm() {
         </Button>
         <ConvertToCSV array={singleInvoice} total={total} />
       </Stack>
-      {alert ? onAlert() : ""}
+      {alert ? onAlert("success") : ""}
+      {errAlert ? onAlert("error") : ""}
     </FormikProvider>
   );
 }

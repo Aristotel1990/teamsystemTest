@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import AddCustomers from "../components/AddCustomers";
 import Page from "../utils/Page";
 
 // material
 import { Tab, Box, Tabs, Stack } from "@mui/material";
-import CustomersTable from "../components/CustomersTable";
+import { CustomersTable } from "../components/tables";
+import { AddCustomers } from "../components/home";
 
 // redux
 

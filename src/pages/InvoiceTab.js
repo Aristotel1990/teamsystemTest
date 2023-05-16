@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
-import CustomersList from "../components/CustomersList";
-import AddCustomers from "../components/AddCustomers";
+
 import Page from "../utils/Page";
-import InvoiceTable from "../components/InvoiceTable";
-import CreateInvoice from "../components/CreateInvoice";
+
 import { useDispatch } from "../redux/store";
 
 // material
-import { Tab, Box, Tabs, Stack, Grid } from "@mui/material";
+import { Tab, Box, Tabs, Stack } from "@mui/material";
 import {
   getData,
   getInvoicesFromStorage,
   getItemsFromStorage,
   getdataFromStorage,
 } from "../redux/slices/data";
+import { InvoiceTable } from "../components/tables";
+import { CreateInvoice } from "../components/home";
 
 // redux
 
@@ -56,7 +56,7 @@ export default function InvoiceTab() {
     setCurrentTab(newValue);
   };
   return (
-    <Page title="User: Account Settings | Bip Courier">
+    <Page title="User">
       <Stack spacing={2}>
         <Tabs
           value={currentTab}

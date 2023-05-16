@@ -1,15 +1,15 @@
 import * as React from "react";
-import { useSelector, useDispatch } from "../redux/store";
-import { Box, Grid, Button } from "@mui/material";
+import { useSelector, useDispatch } from "../../redux/store";
+import { Button, Grid, Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { deleteCustomersByID, getdataFromStorage } from "../redux/slices/data";
+import { deleteItemsByID, getItemsFromStorage } from "../../redux/slices/data";
 import { useEffect } from "react";
 
-export default function CustomersTable() {
-  const { customers } = useSelector((state) => state.data);
+export default function ItemsTable() {
+  const { items } = useSelector((state) => state.data);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getdataFromStorage());
+    dispatch(getItemsFromStorage());
   }, [dispatch]);
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
@@ -17,19 +17,15 @@ export default function CustomersTable() {
       field: "number",
       headerName: "Number",
       width: 150,
-
-      editable: true,
     },
     {
-      field: "name",
-      headerName: "Fullname",
+      field: "title",
+      headerName: "Title",
       width: 300,
-
-      editable: true,
     },
     {
-      field: "country",
-      headerName: "Country",
+      field: "price",
+      headerName: "Price",
       width: 150,
 
       sortable: false,
@@ -42,7 +38,7 @@ export default function CustomersTable() {
           <Button
             color="warning"
             variant="text"
-            onClick={() => dispatch(deleteCustomersByID(params.row.id))}
+            onClick={() => dispatch(deleteItemsByID(params.row.id))}
           >
             delete
           </Button>
@@ -55,17 +51,17 @@ export default function CustomersTable() {
     <Grid padding={2} container>
       <Box sx={{ height: 500, width: "100%" }}>
         <DataGrid
-          rows={customers}
+          rows={items}
           columns={columns}
           density="compact"
           initialState={{
             pagination: {
               paginationModel: {
-                pcountrySize: 10,
+                pageSize: 10,
               },
             },
           }}
-          pcountrySizeOptions={[10]}
+          pageSizeOptions={[10]}
           disableRowSelectionOnClick
         />
       </Box>
