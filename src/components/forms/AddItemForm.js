@@ -27,10 +27,10 @@ export default function AddItemForm() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      id: lastElement?.id + 1,
-      number: number,
-      title: title,
-      price: price,
+      id: lastElement?.id + 1 || 0,
+      number: number || "",
+      title: title || "",
+      price: price || 0,
     },
     // validationSchema: NewUserSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
@@ -65,6 +65,7 @@ export default function AddItemForm() {
           direction={{ xs: "column", sm: "row" }}
           justifyContent="space-between"
           spacing={{ xs: 3, sm: 2 }}
+          marginX={2}
         >
           <Card sx={{ p: 3, bgcolor: "#eeffee", width: "50%" }}>
             <Stack

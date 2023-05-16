@@ -23,7 +23,7 @@ export default function AddCustomerForm() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      id: lastElement?.id + 1,
+      id: lastElement?.id + 1 || 0,
       number: number,
       name: name,
       country: country,

@@ -8,7 +8,7 @@ export default function CustomersList() {
   const { customers } = useSelector((state) => state.data);
 
   return (
-    <Card sx={{ p: 2 }}>
+    <Card sx={{ p: 2, marginTop: 2 }}>
       <Typography variant="overline" sx={{ display: "block" }}>
         My Customers
       </Typography>
