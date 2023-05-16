@@ -6,13 +6,13 @@ import { GridArrowDownwardIcon } from "@mui/x-data-grid";
 export default function ConvertTocsvByID({ id }) {
   const { data } = useSelector((state) => state.data);
 
-  const found = data.find((element, index) => index === id - 1);
-  const total = found.reduce((a, v) => (a = a + v.total), 0);
+  const found = data?.find((element, index) => index === id - 1);
+  const total = found?.reduce((a, v) => (a = a + v?.total), 0);
 
   let arrayList = [["ID", "Item", "Price in €", "Quantity", "Total"]];
   const end = ["", "", "", "TOTAL", total];
   const extractValues = () => {
-    found.map((number) => {
+    found?.map((number) => {
       const propertyValues = Object.values(number);
 
       arrayList.push(propertyValues);

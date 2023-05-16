@@ -1,20 +1,11 @@
 import React, { useState } from "react";
-import dayjs from "dayjs";
 import { Form, FormikProvider, useFormik } from "formik";
 // material
 import { Box, Card, Stack, TextField, Button } from "@mui/material";
 // utils
 import { useDispatch, useSelector } from "../redux/store";
-import {
-  addCustomers,
-  addFakeCustomers,
-  addFakeItems,
-  addItems,
-  clearCustomers,
-  clearItems,
-} from "../redux/slices/data";
+import { addFakeItems, addItems, clearItems } from "../redux/slices/data";
 import { InputAdornment } from "@mui/material";
-import { MenuItem } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -76,7 +67,7 @@ export default function AddItemForm() {
             >
               <TextField
                 size="small"
-                label="Number"
+                label="Number/Code"
                 {...getFieldProps("number")}
                 onChange={(event) => setNumber(event.target.value)}
               />

@@ -4,7 +4,7 @@ import ItemsTable from "../components/ItemsTable";
 import AddItems from "../components/AddItems";
 
 // material
-import { Tab, Box, Tabs, Stack, Grid } from "@mui/material";
+import { Tab, Box, Tabs, Stack } from "@mui/material";
 
 // redux
 
@@ -17,7 +17,7 @@ export default function ItemsTab() {
     {
       value: "Items",
       component: (
-        <Page title="User">
+        <Page title="Items">
           <Box sx={{ height: 800 }}>
             <ItemsTable />
           </Box>
@@ -28,7 +28,7 @@ export default function ItemsTab() {
     {
       value: "Add Items",
       component: (
-        <Page title="User">
+        <Page title="Add Items">
           <Box sx={{ height: 800 }}>
             <AddItems />
           </Box>
@@ -40,7 +40,7 @@ export default function ItemsTab() {
     setCurrentTab(newValue);
   };
   return (
-    <Page title="User: Account Settings | Bip Courier">
+    <Page title="Teamflex">
       <Stack spacing={2}>
         <Tabs
           value={currentTab}

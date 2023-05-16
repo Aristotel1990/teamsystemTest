@@ -44,7 +44,7 @@ export default function TablePrice() {
             <TableBody>
               {singleInvoice.map((row) => (
                 <TableRow
-                  key={row.name}
+                  key={row.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">

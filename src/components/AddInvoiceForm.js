@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, FormikProvider, useFormik } from "formik";
 // material
 import {
@@ -15,10 +15,11 @@ import {
 import { useDispatch, useSelector } from "../redux/store";
 import {
   addData,
-  clearCustomers,
   clearSingleinvoice,
   createData,
   createInoices,
+  getItemsFromStorage,
+  getdataFromStorage,
 } from "../redux/slices/data";
 import ConvertToCSV from "./ConvertToCSV";
 
@@ -32,19 +33,18 @@ export default function AddInvoiceForm() {
 
   const [item, setItem] = useState(items[0]);
   const [quantity, setQuantity] = useState(0);
-  const [customer, setCustomer] = useState("");
-  const total = singleInvoice.reduce((a, v) => (a = a + v.total), 0);
-  const nr = singleInvoice.reduce((a, v) => (a = a + v.quantity), 0);
+  const [customer, setCustomer] = useState(customers[0]?.name);
   const [alert, setAlert] = useState(false);
+  const total = singleInvoice?.reduce((a, v) => (a = a + v?.total), 0);
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
       id: singleInvoice?.length,
       item: item?.title,
-      price: item?.price,
+      price: item?.price || 0,
       quantity: quantity,
-      total: item?.price * quantity,
+      total: item?.price * quantity || 0,
     },
     // validationSchema: NewUserSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
@@ -60,27 +60,33 @@ export default function AddInvoiceForm() {
     },
   });
   const onCreateInvoice = async () => {
+    const nr = singleInvoice?.reduce((a, v) => (a = a + v?.quantity), 0);
+    const number = data.length + 1;
     const newData = {
       id: data?.length + 1,
-      number: data.length + 1,
+      number: number.toString(),
       date: new Date(),
       customer: customer,
       email: "test@t.com",
       paymenta: "",
       accounting: nr,
       status: "Completed",
-      total: total,
+      total: total.toString(),
     };
 
     await dispatch(createInoices(newData));
     setAlert(true);
     dispatch(createData(singleInvoice));
   };
+  const oncloseAlert = (id) => {
+    setAlert(false);
+    dispatch(clearSingleinvoice());
+  };
   const onAlert = () => {
     return (
       <>
-        <Alert onClose={() => setAlert(false)}>
-          Invoice is created — check it out!
+        <Alert onClose={oncloseAlert}>
+          Invoice is created — check it on the table!
         </Alert>
       </>
     );
@@ -93,7 +99,7 @@ export default function AddInvoiceForm() {
     setItem(items[0]);
     setQuantity(0);
   };
-  const { errors, touched, handleSubmit, getFieldProps } = formik;
+  const { errors, touched, handleSubmit } = formik;
 
   return (
     <FormikProvider value={formik}>
@@ -113,6 +119,7 @@ export default function AddInvoiceForm() {
                 fullWidth
                 label="Item"
                 placeholder="Item"
+                value={item?.title}
                 SelectProps={{ native: true }}
                 error={Boolean(touched.size && errors.size)}
                 helperText={touched.size && errors.size}
@@ -131,7 +138,7 @@ export default function AddInvoiceForm() {
                 label="Quantity"
                 type="number"
                 value={quantity}
-                onChange={(event) => setQuantity(event.target.value)}
+                onChange={(event) => setQuantity(Number(event.target.value))}
               />
               <Box sx={{ mt: 3, display: "flex", justifyContent: "flex-end" }}>
                 <Button type="submit" variant="contained">
@@ -143,7 +150,7 @@ export default function AddInvoiceForm() {
           <Card sx={{ p: 3, bgcolor: "#eeffee", width: "50%" }}>
             <Stack>
               <TextField
-                size="medium"
+                size="small"
                 select
                 label="Select Customer"
                 placeholder="Customer"

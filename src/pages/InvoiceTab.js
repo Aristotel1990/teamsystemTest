@@ -4,17 +4,31 @@ import AddCustomers from "../components/AddCustomers";
 import Page from "../utils/Page";
 import InvoiceTable from "../components/InvoiceTable";
 import CreateInvoice from "../components/CreateInvoice";
+import { useDispatch } from "../redux/store";
 
 // material
 import { Tab, Box, Tabs, Stack, Grid } from "@mui/material";
+import {
+  getData,
+  getInvoicesFromStorage,
+  getItemsFromStorage,
+  getdataFromStorage,
+} from "../redux/slices/data";
 
 // redux
 
 // ----------------------------------------------------------------------
 
 export default function InvoiceTab() {
+  const dispatch = useDispatch();
+
   const [currentTab, setCurrentTab] = useState("Invoices");
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(getdataFromStorage());
+    dispatch(getItemsFromStorage());
+    dispatch(getInvoicesFromStorage());
+    dispatch(getData());
+  }, [dispatch]);
   const ACCOUNT_TABS = [
     {
       value: "Invoices",

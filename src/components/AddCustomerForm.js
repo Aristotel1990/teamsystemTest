@@ -28,7 +28,6 @@ export default function AddCustomerForm() {
       name: name,
       country: country,
     },
-    // validationSchema: NewUserSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
         dispatch(addCustomers(values));

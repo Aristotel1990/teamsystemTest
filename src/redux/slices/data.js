@@ -307,10 +307,7 @@ const slice = createSlice({
         return obj;
       });
       state.invoices = newArr;
-      console.log(
-        "🚀 ~ file: data.js:53 ~ editInvoice ~  state.invoices:",
-        state.invoices
-      );
+
       window.localStorage.setItem("invoices", JSON.stringify(state.invoices));
     },
     deleteInvoiceItemsByID(state, action) {
@@ -335,28 +332,28 @@ const slice = createSlice({
     addFakeItems(state) {
       state.items = [
         { id: 0, number: "546454a", title: "glasses", price: 150 },
-        { id: 1, number: "43424", title: "shoes", price: 200 },
-        { id: 2, number: "4234524", title: "phone", price: 200 },
-        { id: 3, number: "4245224", title: "book", price: 200 },
+        { id: 1, number: "32423423", title: "shoes", price: 300 },
+        { id: 2, number: "4234524", title: "phone", price: 100 },
+        { id: 3, number: "4245224", title: "book", price: 80 },
         {
           id: 4,
           number: "42547524",
           title: "tshirt",
           price: 200,
         },
-        { id: 5, number: "424", title: "jeans", price: 200 },
+        { id: 5, number: "4353566", title: "jeans", price: 40 },
         {
           id: 6,
           number: "45234245",
           title: "pants",
-          price: 200,
+          price: 130,
         },
-        { id: 7, number: "7586732", title: "sun glasses", price: 200 },
+        { id: 7, number: "7586732", title: "sun glasses", price: 270 },
         {
           id: 8,
           number: "43736532",
           title: "tv",
-          price: 200,
+          price: 400,
         },
       ];
       window.localStorage.setItem("items", JSON.stringify(state.items));
@@ -378,7 +375,12 @@ const slice = createSlice({
     addFakeCustomers(state) {
       state.customers = [
         { id: 0, number: "546454a", name: "Jon Adams", country: "Albania" },
-        { id: 1, number: "43424", name: "Cersei Loss", country: "Albania" },
+        {
+          id: 1,
+          number: "4342423432",
+          name: "Cersei Loss",
+          country: "Albania",
+        },
         { id: 2, number: "4234524", name: "Jaime Derulo", country: "Albania" },
         { id: 3, number: "4245224", name: "Arya Grande", country: "Albania" },
         {
@@ -387,7 +389,7 @@ const slice = createSlice({
           name: "Daenerys Conte",
           country: "Albania",
         },
-        { id: 5, number: "424", name: "Daenerys Ferara", country: "Albania" },
+        { id: 5, number: "324323", name: "Alexia Ferara", country: "Albania" },
         {
           id: 6,
           number: "45234245",
@@ -418,6 +420,10 @@ const slice = createSlice({
 
     clearData(state) {
       state.data = [];
+      state.customers = [];
+      state.invoices = [];
+      state.singleInvoice = [];
+      state.items = [];
 
       localStorage.clear();
     },

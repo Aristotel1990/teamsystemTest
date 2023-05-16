@@ -19,6 +19,7 @@ import { GridDeleteIcon, GridPrinIcon } from "@mui/x-data-grid";
 import {
   clearData,
   deleteInvoiceByID,
+  getData,
   getInvoicesFromStorage,
 } from "../redux/slices/data";
 import { filter } from "lodash";
@@ -33,10 +34,15 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
+    if (!isNaN(query)) {
+    }
     return filter(
       array,
       (_user) =>
-        _user.customer.toLowerCase().indexOf(query.toLowerCase()) !== -1
+        _user.customer.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
+        _user.status.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
+        _user.number.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
+        _user.total.toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
   }
   return stabilizedThis.map((el) => el[0]);
@@ -61,6 +67,12 @@ export default function InvoiceTable() {
   const [filterName, setFilterName] = useState("");
   const [orderBy] = useState("id");
   const [data, setData] = useState(invoices);
+
+  useEffect(() => {
+    dispatch(getInvoicesFromStorage());
+    dispatch(getData());
+    setData(invoices);
+  }, []);
   const columns = [
     { field: "id", headerName: "ID", width: 30, hide: true },
     {
@@ -83,7 +95,7 @@ export default function InvoiceTable() {
       field: "email",
       headerName: "E-mail",
       sortable: false,
-      width: 160,
+      width: 110,
     },
 
     {
@@ -93,7 +105,7 @@ export default function InvoiceTable() {
     },
     {
       field: "accounting",
-      headerName: "Accounting",
+      headerName: "Accounting Items",
       sortable: false,
       width: 100,
     },
@@ -151,7 +163,6 @@ export default function InvoiceTable() {
       renderCell: (params) => <ConvertTocsvByID id={params?.row?.id} />,
     },
   ];
-  useEffect(() => {}, [dispatch]);
 
   const allData = applySortFilter(
     invoices,
@@ -179,17 +190,19 @@ export default function InvoiceTable() {
         <Stack
           direction={{ xs: "column", sm: "row" }}
           spacing={{ xs: 3, sm: 2 }}
+          justifyContent="space-between"
         >
-          <TextField
-            label="Search invoice by customer"
-            multiline
-            size="small"
-            maxRows={4}
-            value={filterName}
-            onChange={onFilterName}
-          />
-          <ConvertToCSV />
-          <Button onClick={() => dispatch(clearData())}>Clear data</Button>
+          <Stack sx={{ width: "30%", justifyContent: "flex-end" }}>
+            <TextField
+              label="Search by customer,status,number or total"
+              size="small"
+              fullWidth
+              value={filterName}
+              onChange={onFilterName}
+            />
+          </Stack>
+
+          <Button onClick={() => dispatch(clearData())}>Clear all data</Button>
         </Stack>
       </Grid>{" "}
       <Box sx={{ height: 500, width: "100%" }}>
